@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PJOK Bola Voli SD - Media Pembelajaran Interaktif</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        skycourt: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            400: '#38bdf8',
+                            500: '#0ea5e9', // Biru Langit Cerah
+                            600: '#0284c7', // Biru Lapangan Voli
+                            800: '#075985',
+                            950: '#082f49',
+                        },
+                        volley: {
+                            yellow: '#facc15', // Kuning Bola Voli
+                            gold: '#eab308',
+                            orange: '#f97316', // Oranye Cerah
+                            mint: '#10b981',
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Fredoka', 'cursive', 'sans-serif'],
+                        body: ['Nunito', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #F0F9FF;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Fredoka', cursive, sans-serif;
+            letter-spacing: 0.015em;
+        }
+        .float-volley {
+            animation: floatVolley 2.8s ease-in-out infinite;
+        }
+        @keyframes floatVolley {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+        }
+        .spin-volley {
+            transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .spin-volley:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #E0F2FE;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0284C7;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen selection:bg-skycourt-500 selection:text-white">
+
+    <!-- ==================== 1. HEADER / NAVBAR ==================== -->
+    <header class="sticky top-0 z-50 bg-slate-900 text-white shadow-xl border-b-4 border-volley-yellow">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Brand & Creator Identity -->
+            <a href="#hero" class="flex items-center gap-3 group">
+                <div class="bg-volley-yellow text-slate-950 p-2 rounded-2xl font-bold text-xl w-11 h-11 flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition">
+                    🏐
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-extrabold tracking-wide leading-tight font-heading text-white">
+                        PJOK <span class="text-skycourt-400">BOLA VOLI</span> <span class="text-volley-yellow">SD</span>
+                    </h1>
+                    <p class="text-xs text-skycourt-200 font-bold hidden sm:block">
+                        Tubagus Sayyid • NPM: 41182191240078
+                    </p>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center gap-1.5 font-heading font-semibold text-sm">
+                <a href="#pengenalan" class="px-3 py-2 rounded-xl hover:bg-slate-800 hover:text-skycourt-400 transition">
+                    Pengenalan
+                </a>
+                <a href="#simulator" class="px-3.5 py-2 rounded-xl bg-skycourt-500 text-white font-extrabold hover:bg-skycourt-400 transition shadow flex items-center gap-1.5">
+                    <i class="fa-solid fa-gamepad"></i> Simulator Voli 2D
+                </a>
+                <a href="#teknik" class="px-3 py-2 rounded-xl hover:bg-slate-800 hover:text-skycourt-400 transition">
+                    Materi & Teknik
+                </a>
+                <a href="#sportivitas" class="px-3 py-2 rounded-xl hover:bg-slate-800 hover:text-skycourt-400 transition">
+                    Aturan & Fair Play
+                </a>
+                <a href="#kuis" class="px-3.5 py-2 bg-volley-yellow text-slate-950 font-extrabold rounded-xl hover:bg-yellow-300 transition shadow">
+                    Kuis SD ⭐️
+                </a>
+                <a href="#pembuat" class="px-3 py-2 rounded-xl hover:bg-slate-800 text-volley-orange">
+                    Pembuat
+                </a>
+            </nav>
+
+            <!-- Audio Stop Button + Mobile Toggle -->
+            <div class="flex items-center gap-2">
+                <button onclick="stopAllSpeech()" title="Hentikan Suara Narasi" class="bg-rose-500 hover:bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow transition">
+                    <i class="fa-solid fa-volume-xmark"></i> <span class="hidden sm:inline">Stop Audio</span>
+                </button>
+                <button id="menu-btn" class="lg:hidden text-white text-2xl focus:outline-none p-1.5 rounded-xl hover:bg-slate-800" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-950 px-4 pt-2 pb-4 space-y-2 font-heading border-t border-slate-800">
+            <a href="#pengenalan" class="block py-2.5 px-3 hover:bg-slate-800 rounded-xl text-white">1. Pengenalan Bola & Lapangan Voli</a>
+            <a href="#simulator" class="block py-2.5 px-3 bg-skycourt-500 text-white font-bold rounded-xl">2. Simulator Lapangan Voli 2D 🏐</a>
+            <a href="#teknik" class="block py-2.5 px-3 hover:bg-slate-800 rounded-xl text-white">3. Materi Teknik Dasar Bola Voli SD</a>
+            <a href="#sportivitas" class="block py-2.5 px-3 hover:bg-slate-800 rounded-xl text-white">4. Peraturan & Sportivitas SD</a>
+            <a href="#kuis" class="block py-2.5 px-3 bg-volley-yellow text-slate-950 font-bold rounded-xl">5. Kuis Interaktif Anak SD ⭐️</a>
+            <a href="#pembuat" class="block py-2.5 px-3 hover:bg-slate-800 rounded-xl text-volley-orange font-bold">Profil Pembuat (Tubagus Sayyid)</a>
+        </div>
+    </header>
+
+    <!-- ==================== 2. HERO BANNER ==================== -->
+    <section id="hero" class="bg-gradient-to-br from-skycourt-600 via-skycourt-500 to-skycourt-400 text-white py-12 md:py-16 px-4 relative overflow-hidden border-b-4 border-skycourt-800">
+        <!-- Decorative Volleyball Court & Net Lines -->
+        <div class="absolute inset-0 pointer-events-none opacity-15">
+            <svg class="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
+                <rect x="30" y="30" width="740" height="340" fill="none" stroke="#FFFFFF" stroke-width="6"/>
+                <line x1="400" y1="30" x2="400" y2="370" stroke="#FACC15" stroke-width="8" stroke-dasharray="12,8"/>
+                <line x1="270" y1="30" x2="270" y2="370" stroke="#FFFFFF" stroke-width="4"/>
+                <line x1="530" y1="30" x2="530" y2="370" stroke="#FFFFFF" stroke-width="4"/>
+            </svg>
+        </div>
+
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            <!-- Left Content -->
+            <div class="text-center md:text-left md:w-3/5 space-y-4">
+                <div class="inline-flex flex-wrap items-center justify-center md:justify-start gap-2">
+                    <span class="bg-volley-yellow text-slate-950 px-4 py-1.5 rounded-full text-xs md:text-sm font-black uppercase tracking-wider shadow font-heading">
+                        <i class="fa-solid fa-volleyball"></i> Materi PJOK Sekolah Dasar (SD)
+                    </span>
+                    <button onclick="playWhistleSound()" class="bg-slate-900/80 hover:bg-slate-900 text-volley-yellow px-3.5 py-1.5 rounded-full text-xs font-extrabold flex items-center gap-1.5 border border-volley-yellow/50 transition shadow">
+                        <i class="fa-solid fa-bullhorn"></i> Peluit Wasit Voli!
+                    </button>
+                </div>
+
+                <h2 class="text-3xl md:text-5xl font-black leading-tight font-heading drop-shadow">
+                    AYO BELAJAR <br/><span class="text-volley-yellow">OLAHRAGA BOLA VOLI</span>
+                </h2>
+                <p class="text-white/95 text-base md:text-lg font-semibold leading-relaxed">
+                    Halo siswa-siswi SD! Mari pelajari cara melakukan <strong>Servis Bawah</strong>, <strong>Passing Bawah</strong>, <strong>Passing Atas</strong>, dan <strong>Smash Ringan</strong> lewat animasi lapangan voli interaktif dan suara narasi!
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
+                    <a href="#simulator" onclick="playVolleyHitSound()" class="bg-volley-yellow hover:bg-yellow-300 text-slate-950 font-black px-6 py-3.5 rounded-2xl transform hover:-translate-y-1 transition shadow-lg flex items-center gap-2 font-heading text-base">
+                        <i class="fa-solid fa-play"></i> Coba Simulator Voli 2D
+                    </a>
+                    <a href="#kuis" onclick="playWhistleSound()" class="bg-volley-orange hover:bg-orange-400 text-white px-6 py-3.5 rounded-2xl font-black transform hover:-translate-y-1 transition shadow-lg flex items-center gap-2 font-heading text-base border-2 border-white/30">
+                        <i class="fa-solid fa-trophy"></i> Kuis Bola Voli (5 Soal)
+                    </a>
+                </div>
+
+                <!-- Creator Badge in Hero -->
+                <div class="pt-4 mt-2 border-t border-white/25 flex items-center justify-center md:justify-start gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-slate-900 text-volley-yellow font-black flex items-center justify-center text-sm font-heading shadow-md border-2 border-volley-yellow flex-shrink-0">
+                        TS
+                    </div>
+                    <div class="text-left text-xs md:text-sm">
+                        <p class="font-bold text-white">Disusun oleh: <span class="text-volley-yellow font-extrabold">Tubagus Sayyid</span></p>
+                        <p class="text-skycourt-100 font-bold">NPM: <span class="bg-slate-900/70 text-white px-2 py-0.5 rounded font-mono">41182191240078</span> • Pembelajaran PJOK SD</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Illustration: Kid Volleyball Player Doing Passing Bawah + Yellow-Blue Volleyball SVG -->
+            <div class="md:w-2/5 flex justify-center">
+                <div onclick="triggerHeroVolleyHit()" class="relative w-72 h-72 md:w-80 md:h-80 bg-white/15 backdrop-blur-md rounded-3xl p-4 border-4 border-volley-yellow shadow-2xl flex flex-col items-center justify-center cursor-pointer float-volley group">
+                    <svg id="hero-volley-svg" viewBox="0 0 320 265" class="w-full h-full drop-shadow-md">
+                        <!-- Court Floor Shadow -->
+                        <ellipse cx="160" cy="232" rx="135" ry="20" fill="#0369A1" opacity="0.55"/>
+                        <ellipse cx="160" cy="229" rx="118" ry="14" fill="#F97316" stroke="#FFFFFF" stroke-width="2.5"/>
+
+                        <!-- Kid Volleyball Player (Ready Passing Bawah Stance) -->
+                        <!-- Left Bent Leg -->
+                        <path d="M 126 162 L 106 188 L 114 218" fill="none" stroke="#FDBA74" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 111 203 L 114 218" stroke="#FFFFFF" stroke-width="15" stroke-linecap="round"/>
+                        <rect x="98" y="214" width="26" height="11" rx="5" fill="#0284C7" stroke="#0F172A" stroke-width="2"/>
+
+                        <!-- Right Bent Leg -->
+                        <path d="M 154 162 L 172 188 L 166 218" fill="none" stroke="#FDBA74" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 169 203 L 166 218" stroke="#FFFFFF" stroke-width="15" stroke-linecap="round"/>
+                        <rect x="158" y="214" width="26" height="11" rx="5" fill="#0284C7" stroke="#0F172A" stroke-width="2"/>
+
+                        <!-- Sport Shorts -->
+                        <path d="M 116 142 L 164 142 L 168 168 L 143 168 L 140 158 L 137 168 L 112 168 Z" fill="#0F172A"/>
+
+                        <!-- Volleyball Jersey (Bright Orange & Yellow Trim) -->
+                        <path d="M 116 98 L 164 98 L 162 144 L 118 144 Z" fill="#F97316" stroke="#C2410C" stroke-width="2"/>
+                        <text x="136" y="128" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="900" font-size="19" fill="#FFFFFF">8</text>
+
+                        <!-- Kid Head Looking Up at the Ball -->
+                        <circle cx="142" cy="70" r="23" fill="#FDBA74" stroke="#EA580C" stroke-width="1.5"/>
+                        <!-- Sporty Hair & Headband -->
+                        <path d="M 119 65 C 118 40, 166 40, 165 65 C 157 52, 148 51, 142 54 C 135 51, 126 52, 119 65 Z" fill="#1E293B"/>
+                        <rect x="120" y="57" width="44" height="5" rx="2.5" fill="#FACC15"/>
+                        <!-- Eyes looking up-right toward volleyball -->
+                        <circle cx="138" cy="67" r="2.8" fill="#0F172A"/>
+                        <circle cx="152" cy="66" r="2.8" fill="#0F172A"/>
+                        <path d="M 138 77 Q 146 84, 154 76" fill="none" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round"/>
+
+                        <!-- Both Arms Straight Forward & Joined (Passing Bawah Form!) -->
+                        <path d="M 156 105 L 208 134" stroke="#FDBA74" stroke-width="11" stroke-linecap="round"/>
+                        <path d="M 124 106 L 204 136" stroke="#FED7AA" stroke-width="11" stroke-linecap="round"/>
+                        <!-- Joined Hands / Clasp -->
+                        <circle cx="209" cy="136" r="8" fill="#FDBA74" stroke="#EA580C" stroke-width="1.5"/>
+
+                        <!-- Yellow & Blue Volleyball Bouncing Above Forearms -->
+                        <g transform="translate(226, 86)">
+                            <circle cx="0" cy="0" r="25" fill="#FACC15" stroke="#0F172A" stroke-width="2.5"/>
+                            <!-- Blue & White Curved Volleyball Panels -->
+                            <path d="M -23 -8 Q 0 -18, 23 -8" fill="none" stroke="#0284C7" stroke-width="6"/>
+                            <path d="M -23 8 Q 0 18, 23 8" fill="none" stroke="#FFFFFF" stroke-width="5"/>
+                            <path d="M -8 -23 Q -18 0, -8 23" fill="none" stroke="#0284C7" stroke-width="5"/>
+                            <circle cx="0" cy="0" r="25" fill="none" stroke="#0F172A" stroke-width="2.5"/>
+                            <!-- Bounce Spark Lines -->
+                            <line x1="-18" y1="31" x2="-12" y2="25" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="0" y1="34" x2="0" y2="27" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="16" y1="30" x2="10" y2="24" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+                        </g>
+                    </svg>
+                    <span class="bg-slate-900 text-volley-yellow text-xs font-extrabold px-4 py-1.5 rounded-full shadow border border-volley-yellow font-heading">
+                        Klik Pemain untuk Passing Voli! 🏐✨
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="max-w-5xl mx-auto px-4 py-10 space-y-14 flex-grow">
+
+        <!-- 3. PENGENALAN BOLA VOLI & LAPANGAN VOLI MINI SD -->
+        <section id="pengenalan" class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-3 border-skycourt-200">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-skycourt-100 text-skycourt-600 p-3.5 rounded-2xl text-2xl font-black">
+                        <i class="fa-solid fa-volleyball"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 font-heading">Mengenal Olahraga Bola Voli Mini SD</h2>
+                        <p class="text-sm text-slate-500 font-semibold">Kenali bola voli, tinggi net, dan jumlah pemain bola voli mini untuk anak SD!</p>
+                    </div>
+                </div>
+                <button onclick="speakText('Bola voli adalah olahraga permainan bola besar beregu yang dimainkan oleh dua tim yang dipisahkan oleh net di tengah lapangan. Untuk anak Sekolah Dasar, digunakan bola voli mini ukuran 4 yang lebih ringan dengan 4 pemain dalam satu regu.')" class="self-start sm:self-center bg-skycourt-50 hover:bg-skycourt-100 text-skycourt-700 font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 transition border-2 border-skycourt-200">
+                    <i class="fa-solid fa-volume-high text-base"></i> Dengarkan Penjelasan
+                </button>
+            </div>
+
+            <!-- 4 Equipment & Court Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Item 1: Bola Voli Mini (Kuning-Biru) -->
+                <div class="bg-amber-50 rounded-2xl p-5 border-2 border-amber-300 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-3 shadow border border-amber-200 spin-volley cursor-pointer">
+                            <!-- Custom Yellow-Blue Volleyball SVG -->
+                            <svg viewBox="0 0 60 60" class="w-11 h-11">
+                                <circle cx="30" cy="30" r="25" fill="#FACC15" stroke="#0F172A" stroke-width="2.5"/>
+                                <path d="M 7 22 Q 30 12, 53 22" fill="none" stroke="#0284C7" stroke-width="6"/>
+                                <path d="M 7 38 Q 30 48, 53 38" fill="none" stroke="#FFFFFF" stroke-width="5"/>
+                                <path d="M 21 7 Q 11 30, 21 53" fill="none" stroke="#0284C7" stroke-width="5"/>
+                                <circle cx="30" cy="30" r="25" fill="none" stroke="#0F172A" stroke-width="2.5"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">1. Bola Voli Mini (No. 4)</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3 font-semibold">
+                            Bola voli untuk anak SD berukuran nomor 4, berbahan kulit lunak (*soft touch*), ringan, dan berwarna cerah kuning-biru.
+                        </p>
+                    </div>
+                    <button onclick="speakText('Bola voli mini untuk anak SD menggunakan ukuran nomor 4 yang lebih ringan dan empuk di tangan sehingga tidak sakit saat dipukul.')" class="text-xs text-amber-700 font-extrabold hover:underline flex items-center gap-1.5">
+                        <i class="fa-solid fa-volume-high"></i> Suara Narasi
+                    </button>
+                </div>
+
+                <!-- Item 2: Lapangan Voli Mini -->
+                <div class="bg-skycourt-50 rounded-2xl p-5 border-2 border-skycourt-200 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-14 h-14 bg-skycourt-600 rounded-2xl flex items-center justify-center mb-3 shadow text-white">
+                            <!-- Mini Volleyball Court SVG -->
+                            <svg viewBox="0 0 64 44" class="w-11 h-8">
+                                <rect x="2" y="2" width="60" height="40" rx="3" fill="#F97316" stroke="#FFFFFF" stroke-width="2.5"/>
+                                <line x1="32" y1="1" x2="32" y2="43" stroke="#FACC15" stroke-width="3" stroke-dasharray="3,2"/>
+                                <line x1="21" y1="2" x2="21" y2="42" stroke="#FFFFFF" stroke-width="1.5"/>
+                                <line x1="43" y1="2" x2="43" y2="42" stroke="#FFFFFF" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">2. Lapangan Voli Mini</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3 font-semibold">
+                            Berbentuk persegi panjang ukuran <strong>12 meter x 6 meter</strong> yang dibagi dua sama luas oleh garis tengah.
+                        </p>
+                    </div>
+                    <button onclick="speakText('Lapangan bola voli mini untuk anak SD berukuran panjang 12 meter dan lebar 6 meter dengan permukaan datar dan aman.')" class="text-xs text-skycourt-700 font-extrabold hover:underline flex items-center gap-1.5">
+                        <i class="fa-solid fa-volume-high"></i> Suara Narasi
+                    </button>
+                </div>
+
+                <!-- Item 3: Net & Tiang Tengah -->
+                <div class="bg-orange-50 rounded-2xl p-5 border-2 border-orange-300 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-14 h-14 bg-volley-orange text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-3 shadow">
+                            🥅
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">3. Net & Tiang Tengah</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3 font-semibold">
+                            Tinggi net bola voli mini SD disesuaikan postur anak, yaitu <strong>2,10 meter (putra)</strong> dan <strong>2,00 meter (putri)</strong>.
+                        </p>
+                    </div>
+                    <button onclick="speakText('Tinggi net bola voli mini untuk anak SD adalah 2,10 meter untuk putra dan 2,00 meter untuk putri.')" class="text-xs text-orange-700 font-extrabold hover:underline flex items-center gap-1.5">
+                        <i class="fa-solid fa-volume-high"></i> Suara Narasi
+                    </button>
+                </div>
+
+                <!-- Item 4: 4 Pemain Per Tim -->
+                <div class="bg-emerald-50 rounded-2xl p-5 border-2 border-emerald-300 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-14 h-14 bg-volley-mint text-white rounded-2xl flex items-center justify-center text-2xl font-black mb-3 shadow font-heading">
+                            4v4
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">4. Jumlah Pemain (4 Orang)</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3 font-semibold">
+                            Dalam bola voli mini SD, setiap regu bermain dengan <strong>4 pemain inti</strong> di lapangan (voli dewasa 6 pemain).
+                        </p>
+                    </div>
+                    <button onclick="speakText('Pada permainan bola voli mini jenjang SD, setiap regu berjumlah 4 pemain inti di dalam lapangan.')" class="text-xs text-emerald-700 font-extrabold hover:underline flex items-center gap-1.5">
+                        <i class="fa-solid fa-volume-high"></i> Suara Narasi
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SIMULATOR LAPANGAN BOLA VOLI 2D INTERAKTIF (HTML5 CANVAS) -->
+        <section id="simulator" class="bg-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-volley-yellow relative overflow-hidden">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-5">
+                <div>
+                    <span class="bg-skycourt-500 text-white text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1.5 font-heading shadow">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Simulator Lapangan Bola Voli 2D (Side-View)
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white mt-1.5 font-heading">SIMULASI TEKNIK DASAR BOLA VOLI 🏐</h2>
+                    <p class="text-slate-300 text-xs md:text-sm font-medium">Pilih teknik dasar di samping untuk mengamati lintasan bola melewati net!</p>
+                </div>
+
+                <!-- Mode Selector Buttons -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="setVolleyMode('servis')" id="mode-servis" class="px-3.5 py-2 rounded-xl text-xs font-extrabold font-heading bg-volley-yellow text-slate-950 shadow transition">
+                        1. Servis Bawah
+                    </button>
+                    <button onclick="setVolleyMode('passingBawah')" id="mode-passingBawah" class="px-3.5 py-2 rounded-xl text-xs font-extrabold font-heading bg-slate-800 text-slate-200 hover:bg-slate-700 transition">
+                        2. Passing Bawah
+                    </button>
+                    <button onclick="setVolleyMode('passingAtas')" id="mode-passingAtas" class="px-3.5 py-2 rounded-xl text-xs font-extrabold font-heading bg-slate-800 text-slate-200 hover:bg-slate-700 transition">
+                        3. Passing Atas
+                    </button>
+                    <button onclick="setVolleyMode('smash')" id="mode-smash" class="px-3.5 py-2 rounded-xl text-xs font-extrabold font-heading bg-slate-800 text-slate-200 hover:bg-slate-700 transition">
+                        4. Smash Ringan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interactive Canvas Container -->
+            <div class="relative rounded-2xl overflow-hidden border-4 border-skycourt-400 shadow-inner h-80 md:h-[420px] bg-skycourt-500">
+                <canvas id="volleyCanvas" class="w-full h-full block cursor-pointer" onclick="triggerCanvasVolleyHit()"></canvas>
+
+                <!-- Top-Right Status Badge -->
+                <div id="sim-badge" class="absolute top-3 right-3 bg-slate-950/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-volley-yellow text-xs font-extrabold text-volley-yellow flex items-center gap-2 shadow">
+                    <span class="w-2.5 h-2.5 rounded-full bg-volley-mint animate-ping"></span>
+                    <span id="sim-badge-text">Servis Bawah: Memulai Permainan</span>
+                </div>
+
+                <!-- Bottom Control Bar -->
+                <div class="absolute bottom-3 left-3 right-3 bg-slate-950/90 backdrop-blur-md p-3 rounded-2xl border border-white/15 flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="toggleSimPlay()" id="btn-play-pause" class="bg-skycourt-400 hover:bg-skycourt-300 text-slate-950 font-black px-4 py-2 rounded-xl flex items-center gap-1.5 shadow transition font-heading">
+                            <i class="fa-solid fa-pause"></i> Pause
+                        </button>
+                        <button onclick="triggerCanvasVolleyHit()" class="bg-volley-orange hover:bg-orange-400 text-white font-black px-4 py-2 rounded-xl flex items-center gap-1.5 shadow transition font-heading">
+                            Pukul Bola Voli! 🏐
+                        </button>
+                        <button onclick="toggleVectors()" id="btn-vector" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 px-3 py-2 rounded-xl font-bold transition">
+                            Panah Lintasan: <span id="vector-status" class="text-volley-yellow">ON</span>
+                        </button>
+                    </div>
+
+                    <!-- Speed Presets -->
+                    <div class="flex items-center gap-1.5 bg-slate-900 px-2.5 py-1.5 rounded-xl border border-slate-700">
+                        <span class="text-slate-300 font-bold font-heading mr-1">Kecepatan:</span>
+                        <button onclick="setSimSpeed(0.55, this)" class="speed-btn px-2.5 py-1 rounded-lg font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">Pelan</button>
+                        <button onclick="setSimSpeed(1.0, this)" class="speed-btn px-2.5 py-1 rounded-lg font-bold bg-volley-yellow text-slate-950">Normal</button>
+                        <button onclick="setSimSpeed(1.65, this)" class="speed-btn px-2.5 py-1 rounded-lg font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">Cepat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Instructional Caption -->
+            <div class="mt-3 bg-slate-950/60 border border-slate-700 rounded-2xl p-3.5 flex flex-col sm:flex-row items-center justify-between gap-2">
+                <p id="sim-caption" class="text-xs md:text-sm text-skycourt-200 font-bold text-center sm:text-left">
+                    💡 <strong>Servis Bawah:</strong> Bola dipegang tangan kiri di depan pinggang, lalu tangan kanan mengayun dari bawah memukul bola melambung melewati net!
+                </p>
+                <button onclick="speakCurrentSimCaption()" class="bg-skycourt-500 hover:bg-skycourt-400 text-white px-3.5 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 flex-shrink-0 transition">
+                    <i class="fa-solid fa-volume-high"></i> Bacakan
+                </button>
+            </div>
+        </section>
+
+        <!-- 5. MATERI PEMBELAJARAN BOLA VOLI SD (4 KARTU UTAMA + MODAL DETAIL) -->
+        <section id="teknik" class="space-y-6">
+            <div class="text-center max-w-2xl mx-auto">
+                <span class="bg-skycourt-100 text-skycourt-800 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider font-heading">Materi Inti PJOK SD</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 mt-2 font-heading">MATERI & TEKNIK DASAR BOLA VOLI SD</h2>
+                <p class="text-slate-600 text-sm mt-1 font-semibold">Klik kartu di bawah ini untuk mempelajari langkah-langkah gerakannya dan mendengarkan suaranya!</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Kartu 1: Servis Bawah -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border-3 border-amber-300 hover:border-volley-yellow transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="w-14 h-14 bg-volley-yellow text-slate-950 rounded-2xl flex items-center justify-center text-3xl shadow group-hover:scale-105 transition">
+                                🚀
+                            </div>
+                            <button onclick="speakText('Materi 1: Servis Bawah. Berdiri di belakang garis lapangan, pegang bola dengan tangan kiri di depan pinggang, lalu ayunkan lengan kanan lurus dari bawah ke depan memukul bagian bawah bola hingga melewati net.')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 p-2.5 rounded-xl transition" title="Dengarkan Materi">
+                                <i class="fa-solid fa-volume-high text-base"></i>
+                            </button>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 font-extrabold text-xs px-3 py-1 rounded-lg font-heading">Teknik Dasar 1 • Memulai Permainan</span>
+                        <h3 class="font-heading text-xl font-extrabold text-slate-900 mt-1.5 mb-2">1. Servis Bawah (Underhand Service)</h3>
+                        <p class="text-xs md:text-sm text-slate-600 leading-relaxed mb-4 font-semibold">
+                            Pukulan pertama dari belakang garis lapangan untuk memulai permainan dengan mengayunkan lengan dari bawah hingga bola melambung melewati net.
+                        </p>
+                    </div>
+                    <button onclick="openDetailModal('servis')" class="w-full bg-volley-yellow hover:bg-yellow-300 text-slate-950 font-extrabold py-3 rounded-2xl transition text-xs md:text-sm shadow font-heading flex items-center justify-center gap-2">
+                        Lihat Langkah Gerakan <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Kartu 2: Passing Bawah -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border-3 border-skycourt-200 hover:border-skycourt-500 transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="w-14 h-14 bg-skycourt-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow group-hover:scale-105 transition">
+                                🛡️
+                            </div>
+                            <button onclick="speakText('Materi 2: Passing Bawah. Tekuk kedua lutut seperti kuda-kuda, rapatkan dan luruskan kedua lengan di depan badan, lalu perkenaan bola tepat di lengan bawah di atas pergelangan tangan.')" class="bg-skycourt-50 hover:bg-skycourt-100 text-skycourt-700 p-2.5 rounded-xl transition" title="Dengarkan Materi">
+                                <i class="fa-solid fa-volume-high text-base"></i>
+                            </button>
+                        </div>
+                        <span class="bg-skycourt-100 text-skycourt-800 font-extrabold text-xs px-3 py-1 rounded-lg font-heading">Teknik Dasar 2 • Menerima Bola Rendah</span>
+                        <h3 class="font-heading text-xl font-extrabold text-slate-900 mt-1.5 mb-2">2. Passing Bawah (Forearm Pass)</h3>
+                        <p class="text-xs md:text-sm text-slate-600 leading-relaxed mb-4 font-semibold">
+                            Teknik menerima servis lawan atau mengoper bola yang datang rendah menggunakan kedua lengan bawah yang dirapatkan lurus.
+                        </p>
+                    </div>
+                    <button onclick="openDetailModal('passingBawah')" class="w-full bg-skycourt-500 hover:bg-skycourt-600 text-white font-extrabold py-3 rounded-2xl transition text-xs md:text-sm shadow font-heading flex items-center justify-center gap-2">
+                        Lihat Langkah Gerakan <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Kartu 3: Passing Atas -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border-3 border-orange-300 hover:border-volley-orange transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="w-14 h-14 bg-volley-orange text-white rounded-2xl flex items-center justify-center text-3xl shadow group-hover:scale-105 transition">
+                                🙌
+                            </div>
+                            <button onclick="speakText('Materi 3: Passing Atas. Posisikan kedua tangan di atas depan dahi dengan jari-jari terbuka membentuk mangkuk, lalu dorong bola ke atas menggunakan ruas jari tangan.')" class="bg-orange-50 hover:bg-orange-100 text-orange-700 p-2.5 rounded-xl transition" title="Dengarkan Materi">
+                                <i class="fa-solid fa-volume-high text-base"></i>
+                            </button>
+                        </div>
+                        <span class="bg-orange-100 text-orange-800 font-extrabold text-xs px-3 py-1 rounded-lg font-heading">Teknik Dasar 3 • Mengumpan Tinggi</span>
+                        <h3 class="font-heading text-xl font-extrabold text-slate-900 mt-1.5 mb-2">3. Passing Atas (Overhead Pass)</h3>
+                        <p class="text-xs md:text-sm text-slate-600 leading-relaxed mb-4 font-semibold">
+                            Mengoper atau mengumpan bola yang datang di atas kepala menggunakan ujung jari-jari kedua tangan yang membentuk mangkuk terbuka.
+                        </p>
+                    </div>
+                    <button onclick="openDetailModal('passingAtas')" class="w-full bg-volley-orange hover:bg-orange-600 text-white font-extrabold py-3 rounded-2xl transition text-xs md:text-sm shadow font-heading flex items-center justify-center gap-2">
+                        Lihat Langkah Gerakan <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Kartu 4: Mengenal Bola & Lapangan Voli Mini SD -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border-3 border-emerald-300 hover:border-volley-mint transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="w-14 h-14 bg-volley-mint text-white rounded-2xl flex items-center justify-center text-3xl shadow group-hover:scale-105 transition">
+                                🏟️
+                            </div>
+                            <button onclick="speakText('Materi 4: Mengenal Bola dan Lapangan Voli Mini SD. Lapangan berukuran 12 kali 6 meter, tinggi net 2,10 meter untuk putra dan 2,00 meter untuk putri, serta dimainkan oleh 4 orang setiap regu.')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 p-2.5 rounded-xl transition" title="Dengarkan Materi">
+                                <i class="fa-solid fa-volume-high text-base"></i>
+                            </button>
+                        </div>
+                        <span class="bg-emerald-100 text-emerald-800 font-extrabold text-xs px-3 py-1 rounded-lg font-heading">Pengetahuan Dasar • Sarana & Prasarana</span>
+                        <h3 class="font-heading text-xl font-extrabold text-slate-900 mt-1.5 mb-2">4. Bola & Lapangan Voli Mini SD</h3>
+                        <p class="text-xs md:text-sm text-slate-600 leading-relaxed mb-4 font-semibold">
+                            Memahami spesifikasi ukuran lapangan voli mini (12m x 6m), tinggi net anak SD, bola voli ukuran 4, serta sistem skor reli poin.
+                        </p>
+                    </div>
+                    <button onclick="openDetailModal('sarana')" class="w-full bg-volley-mint hover:bg-emerald-600 text-white font-extrabold py-3 rounded-2xl transition text-xs md:text-sm shadow font-heading flex items-center justify-center gap-2">
+                        Lihat Detail Lapangan & Bola <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. ATURAN DASAR & SPORTIVITAS BERMAIN BOLA VOLI SD -->
+        <section id="sportivitas" class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-3 border-skycourt-200">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-volley-yellow text-slate-950 p-3.5 rounded-2xl text-2xl font-black shadow">
+                        <i class="fa-solid fa-handshake-angle"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 font-heading">Aturan Bermain & Sportivitas SD</h2>
+                        <p class="text-sm text-slate-500 font-semibold">Bermain kompak dalam tim dan menjaga sportivitas di lapangan bola voli</p>
+                    </div>
+                </div>
+                <button onclick="speakText('Aturan dasar permainan bola voli: Setiap regu maksimal menyentuh bola sebanyak 3 kali sebelum menyeberangkan bola ke lapangan lawan. Satu pemain tidak boleh memukul bola dua kali berturut-turut, dan tangan pemain dilarang menyentuh net.')" class="self-start sm:self-center bg-amber-50 hover:bg-amber-100 text-amber-800 font-extrabold px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 transition border border-amber-300">
+                    <i class="fa-solid fa-volume-high"></i> Dengarkan Aturan
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Aturan Utama Bola Voli -->
+                <div class="bg-skycourt-50 rounded-2xl p-5 border-2 border-skycourt-300 space-y-3">
+                    <h3 class="font-heading font-extrabold text-lg text-skycourt-950 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-list text-skycourt-600 text-xl"></i> ATURAN UTAMA BOLA VOLI SD
+                    </h3>
+                    <ul class="space-y-2.5 text-xs md:text-sm text-slate-700 font-bold">
+                        <li class="flex items-start gap-2.5">
+                            <span class="bg-skycourt-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">1</span>
+                            <span><strong>Maksimal 3 Sentuhan:</strong> Setiap tim boleh memantulkan bola maksimal 3 kali sebelum bola diseberangkan melewati net.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="bg-skycourt-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">2</span>
+                            <span><strong>Tidak Double Touch:</strong> Satu pemain tidak boleh memukul bola dua kali secara berturut-turut.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="bg-skycourt-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">3</span>
+                            <span><strong>Dilarang Menyentuh Net:</strong> Saat melompat atau memukul bola, anggota tubuh tidak boleh menyentuh net tengah.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Sikap Sportivitas (Fair Play) -->
+                <div class="bg-amber-50 rounded-2xl p-5 border-2 border-amber-300 space-y-3">
+                    <h3 class="font-heading font-extrabold text-lg text-amber-950 flex items-center gap-2">
+                        <i class="fa-solid fa-star text-volley-orange text-xl"></i> SIKAP SPORTIVITAS & KOMPAK
+                    </h3>
+                    <ul class="space-y-2.5 text-xs md:text-sm text-amber-950 font-bold">
+                        <li class="flex items-start gap-2.5">
+                            <span class="text-volley-orange font-black text-base">✓</span>
+                            <span><strong>Komunikasi & Saling Menyemangati:</strong> Berteriak <em>"Saya!"</em> atau <em>"Oper!"</em> saat hendak menerima bola agar tidak bertabrakan dengan teman.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="text-volley-orange font-black text-base">✓</span>
+                            <span><strong>Pemanasan Jari & Lengan:</strong> Selalu lakukan peregangan pergelangan tangan, jari, bahu, dan lutut sebelum latihan voli.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="text-volley-orange font-black text-base">✓</span>
+                            <span><strong>Fair Play:</strong> Mengakui dengan jujur jika bola menyentuh tangan sebelum keluar lapangan, serta menghormati keputusan wasit/guru PJOK.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. KUIS INTERAKTIF BOLA VOLI SD (5 SOAL) -->
+        <section id="kuis" class="bg-gradient-to-br from-slate-900 via-skycourt-950 to-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-volley-yellow relative overflow-hidden">
+            <div class="text-center max-w-xl mx-auto mb-8">
+                <span class="bg-volley-yellow text-slate-950 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider inline-block font-heading shadow">
+                    ⭐️ Evaluasi Belajar PJOK SD
+                </span>
+                <h2 class="text-3xl font-extrabold text-white mt-2 font-heading">KUIS PINTAR BOLA VOLI (5 SOAL)</h2>
+                <p class="text-skycourt-200 text-xs md:text-sm font-semibold">Pilih jawaban yang paling tepat untuk meraih skor tertinggi dan bintang prestasi!</p>
+            </div>
+
+            <!-- Quiz Card -->
+            <div id="quiz-container" class="bg-white text-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl max-w-2xl mx-auto border-4 border-skycourt-400">
+                <div class="flex justify-between items-center mb-5 pb-4 border-b border-slate-200">
+                    <span id="question-number" class="font-heading font-extrabold text-skycourt-700 bg-skycourt-100 px-3.5 py-1.5 rounded-xl text-xs md:text-sm">Soal 1 dari 5</span>
+                    <div class="flex items-center gap-1.5 text-volley-yellow text-lg font-extrabold bg-slate-900 px-3 py-1 rounded-xl" id="score-pill">
+                        <i class="fa-solid fa-star"></i> <span id="live-score-text" class="text-white text-xs font-heading">Skor: 0</span>
+                    </div>
+                </div>
+
+                <div class="mb-6 flex items-start justify-between gap-3">
+                    <h3 id="question-text" class="text-base md:text-lg font-extrabold text-slate-900 leading-snug">Memuat pertanyaan...</h3>
+                    <button onclick="readCurrentQuestion()" class="p-2.5 bg-skycourt-100 hover:bg-skycourt-200 text-skycourt-700 rounded-xl text-xs font-bold transition flex-shrink-0" title="Bacakan Soal">
+                        <i class="fa-solid fa-volume-high text-base"></i>
+                    </button>
+                </div>
+
+                <div id="options-container" class="grid grid-cols-1 gap-3">
+                    <!-- Options injected via JS -->
+                </div>
+
+                <div id="feedback-box" class="hidden mt-4 p-4 rounded-2xl text-center font-bold text-xs md:text-sm"></div>
+
+                <div class="mt-6 flex justify-end">
+                    <button id="next-btn" onclick="nextQuestion()" class="hidden bg-skycourt-500 hover:bg-skycourt-600 text-white font-extrabold px-6 py-3 rounded-2xl transition text-xs md:text-sm flex items-center gap-2 shadow font-heading">
+                        Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Result Card -->
+            <div id="result-container" class="hidden bg-white text-slate-800 rounded-2xl p-8 text-center shadow-2xl max-w-lg mx-auto border-4 border-volley-yellow">
+                <div class="w-20 h-20 bg-amber-100 text-volley-orange rounded-full flex items-center justify-center mx-auto text-5xl mb-4 shadow-inner border-2 border-volley-yellow">
+                    🏆
+                </div>
+                <h3 class="text-2xl font-black text-slate-900 mb-1 font-heading">HEBAT! KUIS SELESAI!</h3>
+                <p class="text-xs text-slate-500 font-bold mb-2">Nilai Akhir PJOK Bola Voli Kamu:</p>
+                <div class="text-6xl font-black text-skycourt-600 mb-3 font-heading" id="final-score">100</div>
+                <div id="stars-earned" class="text-2xl text-volley-yellow mb-4">⭐⭐⭐⭐⭐</div>
+                <p id="result-message" class="text-slate-700 text-sm font-bold mb-6">Luar biasa! Kamu sudah memahami teknik dasar permainan bola voli SD!</p>
+                <button onclick="resetQuiz()" class="bg-volley-yellow hover:bg-yellow-300 text-slate-950 font-extrabold px-8 py-3.5 rounded-2xl shadow-lg transition transform hover:-translate-y-1 inline-flex items-center gap-2 text-sm font-heading">
+                    <i class="fa-solid fa-rotate-right"></i> Ulangi Kuis
+                </button>
+            </div>
+        </section>
+
+        <!-- 8. KARTU PROFIL PEMBUAT / PENGEMBANG -->
+        <section id="pembuat" class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-skycourt-500 relative overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center gap-6 relative z-10">
+                <div class="w-28 h-28 md:w-36 md:h-36 bg-gradient-to-br from-skycourt-500 via-skycourt-600 to-volley-orange text-white rounded-3xl flex flex-col items-center justify-center shadow-xl border-4 border-volley-yellow flex-shrink-0 font-heading">
+                    <span class="text-4xl md:text-5xl">🏐</span>
+                    <span class="text-xs font-extrabold tracking-widest mt-1 bg-slate-950/60 px-2.5 py-0.5 rounded-full text-volley-yellow">PJOK SD</span>
+                </div>
+                <div class="text-center md:text-left flex-grow">
+                    <span class="bg-skycourt-100 text-skycourt-800 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider font-heading inline-block mb-2">
+                        Profil Pengembang Media Pembelajaran
+                    </span>
+                    <h3 class="text-2xl md:text-3xl font-black text-slate-900 font-heading">Tubagus Sayyid</h3>
+                    <p class="text-skycourt-600 font-extrabold text-base md:text-lg mt-0.5 font-heading">
+                        NPM: <span class="bg-volley-yellow text-slate-950 px-3 py-0.5 rounded-lg tracking-wider font-mono font-black">41182191240078</span>
+                    </p>
+                    <p class="text-slate-600 text-xs md:text-sm mt-3 leading-relaxed font-semibold">
+                        Media pembelajaran PJOK interaktif materi <strong>Teknik Dasar Olahraga Bola Voli</strong> ini dirancang khusus untuk jenjang Sekolah Dasar (SD) dengan visual yang cerah, simulator lapangan 2D, audio narasi Bahasa Indonesia, dan kuis interaktif agar mudah dipahami siswa.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== 9. FOOTER ==================== -->
+    <footer class="bg-slate-950 text-slate-300 py-7 border-t-4 border-volley-yellow mt-auto">
+        <div class="max-w-5xl mx-auto px-4 text-center text-xs md:text-sm space-y-1.5 font-semibold">
+            <p class="text-white font-heading text-base">🏐 Media Pembelajaran PJOK Olahraga Bola Voli — Jenjang Sekolah Dasar (SD)</p>
+            <p class="text-skycourt-300">
+                Dibuat oleh: <span class="text-volley-yellow font-extrabold">Tubagus Sayyid</span> • NPM: <span class="text-white font-mono font-bold">41182191240078</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ==================== MODAL DETAIL LANGKAH GERAKAN ==================== -->
+    <div id="detail-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 relative shadow-2xl border-4 border-skycourt-400">
+            <button onclick="closeDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 text-2xl font-bold w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100">
+                &times;
+            </button>
+            <div id="modal-body" class="space-y-4">
+                <!-- Content injected by JS -->
+            </div>
+            <button onclick="closeDetailModal()" class="mt-6 w-full bg-skycourt-500 hover:bg-skycourt-600 text-white font-extrabold py-3 rounded-2xl transition text-xs md:text-sm shadow font-heading">
+                Saya Paham! Tutup Penjelasan 👍
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // 1. Mobile Navigation Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // 2. Web Speech API (Text-to-Speech Bahasa Indonesia id-ID)
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.96;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function stopAllSpeech() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // 3. Web Audio API Sound Synthesizers (No external audio URLs)
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function ensureAudioCtx() {
+            if (!audioCtx) audioCtx = new AudioCtx();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        // Referee Whistle Sound (Peluit Wasit Bola Voli)
+        function playWhistleSound() {
+            ensureAudioCtx();
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const lfo = audioCtx.createOscillator();
+            const lfoGain = audioCtx.createGain();
+            const mainGain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(2900, now);
+            osc.frequency.linearRampToValueAtTime(3150, now + 0.14);
+            osc.frequency.setValueAtTime(2980, now + 0.36);
+
+            lfo.frequency.value = 36;
+            lfoGain.gain.value = 130;
+            lfo.connect(lfoGain);
+            lfoGain.connect(osc.frequency);
+
+            mainGain.gain.setValueAtTime(0.01, now);
+            mainGain.gain.linearRampToValueAtTime(0.22, now + 0.04);
+            mainGain.gain.setValueAtTime(0.22, now + 0.32);
+            mainGain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+            osc.connect(mainGain);
+            mainGain.connect(audioCtx.destination);
+
+            osc.start(now);
+            lfo.start(now);
+            osc.stop(now + 0.45);
+            lfo.stop(now + 0.45);
+        }
+
+        // Volleyball Bounce / Hit Sound ('Puk!' pantulan bola voli kulit lunak)
+        function playVolleyHitSound() {
+            ensureAudioCtx();
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(290, now);
+            osc.frequency.exponentialRampToValueAtTime(88, now + 0.16);
+
+            gain.gain.setValueAtTime(0.42, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.18);
+        }
+
+        // Point Cheer Sound (Sorak Poin Voli)
+        function playPointCheerSound() {
+            ensureAudioCtx();
+            const now = audioCtx.currentTime;
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5 - E5 - G5 - C6
+            notes.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now + i * 0.08);
+                gain.gain.setValueAtTime(0.2, now + i * 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.35);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now + i * 0.08);
+                osc.stop(now + i * 0.08 + 0.35);
+            });
+        }
+
+        // Quiz Feedback Sound
+        function playQuizFeedbackSound(isCorrect) {
+            ensureAudioCtx();
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (isCorrect) {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, now);
+                osc.frequency.setValueAtTime(880, now + 0.12);
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            } else {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.linearRampToValueAtTime(150, now + 0.25);
+                gain.gain.setValueAtTime(0.18, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            }
+        }
+
+        function triggerHeroVolleyHit() {
+            playVolleyHitSound();
+            confetti({ particleCount: 28, spread: 55, origin: { y: 0.45 } });
+        }
+
+        // 4. HTML5 CANVAS 2D VOLLEYBALL COURT SIMULATOR (SIDE-VIEW)
+        const canvas = document.getElementById('volleyCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let simPlaying = true;
+        let showVectors = true;
+        let volleyMode = 'servis'; // 'servis', 'passingBawah', 'passingAtas', 'smash'
+        let simSpeed = 1.0;
+        let simClock = 0;
+        let hitBoostTimer = 0;
+        let pointBannerTimer = 0;
+        let sparkParticles = [];
+
+        function resizeCanvas() {
+            if (!canvas.parentElement) return;
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function toggleSimPlay() {
+            simPlaying = !simPlaying;
+            const btn = document.getElementById('btn-play-pause');
+            btn.innerHTML = simPlaying
+                ? `<i class="fa-solid fa-pause"></i> Pause`
+                : `<i class="fa-solid fa-play"></i> Play`;
+        }
+
+        function toggleVectors() {
+            showVectors = !showVectors;
+            document.getElementById('vector-status').textContent = showVectors ? 'ON' : 'OFF';
+        }
+
+        function setSimSpeed(val, btnEl) {
+            simSpeed = val;
+            document.querySelectorAll('.speed-btn').forEach(b => {
+                b.className = "speed-btn px-2.5 py-1 rounded-lg font-bold bg-slate-800 text-slate-300 hover:bg-slate-700";
+            });
+            btnEl.className = "speed-btn px-2.5 py-1 rounded-lg font-bold bg-volley-yellow text-slate-950";
+        }
+
+        const modeDetails = {
+            servis: {
+                badge: "Servis Bawah: Memulai Permainan",
+                caption: "💡 Servis Bawah: Pemain berdiri di belakang garis lapangan, mengayunkan lengan kanan dari bawah memukul bola melambung melewati net!"
+            },
+            passingBawah: {
+                badge: "Passing Bawah: Lengan Rapat Lurus",
+                caption: "💡 Passing Bawah: Lutut ditekuk rendah, kedua lengan lurus rapat memantulkan bola datang menuju teman satu tim."
+            },
+            passingAtas: {
+                badge: "Passing Atas: Ujung Jari Mangkuk",
+                caption: "💡 Passing Atas: Kedua tangan berada di atas depan dahi dengan jari terbuka membentuk mangkuk mendorong bola tinggi."
+            },
+            smash: {
+                badge: "Smash Ringan: Pukulan Menukik",
+                caption: "💡 Smash Ringan: Pemain melompat di dekat net dan memukul bola dengan telapak tangan terbuka menukik ke lapangan lawan!"
+            }
+        };
+
+        function setVolleyMode(mode) {
+            volleyMode = mode;
+            simClock = 0;
+            pointBannerTimer = 0;
+            playVolleyHitSound();
+
+            ['servis', 'passingBawah', 'passingAtas', 'smash'].forEach(m => {
+                const el = document.getElementById('mode-' + m);
+                el.className = (m === mode)
+                    ? "px-3.5 py-2 rounded-xl text-xs font-extrabold font-heading bg-volley-yellow text-slate-950 shadow transition"
+                    : "px-3.5 py-2 rounded-xl text-xs font-extrabold font-heading bg-slate-800 text-slate-200 hover:bg-slate-700 transition";
+            });
+
+            document.getElementById('sim-badge-text').textContent = modeDetails[mode].badge;
+            document.getElementById('sim-caption').innerHTML = modeDetails[mode].caption;
+        }
+
+        function speakCurrentSimCaption() {
+            const rawText = document.getElementById('sim-caption').innerText.replace('💡 ', '');
+            speakText(rawText);
+        }
+
+        function spawnSparkParticles(x, y, color = '#FACC15') {
+            for (let i = 0; i < 18; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const spd = Math.random() * 4.5 + 1.5;
+                sparkParticles.push({
+                    x, y,
+                    vx: Math.cos(angle) * spd,
+                    vy: Math.sin(angle) * spd,
+                    r: Math.random() * 4.5 + 2,
+                    color,
+                    alpha: 1
+                });
+            }
+        }
+
+        function triggerCanvasVolleyHit() {
+            playVolleyHitSound();
+            hitBoostTimer = 28;
+            spawnSparkParticles(canvas.width * 0.5, canvas.height * 0.35, '#FACC15');
+        }
+
+        // Draw Parabolic Trajectory Curve Guide
+        function drawTrajectoryArc(x1, y1, cx, cy, x2, y2, color = '#FACC15') {
+            if (!showVectors) return;
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.setLineDash([7, 5]);
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.quadraticCurveTo(cx, cy, x2, y2);
+            ctx.stroke();
+
+            // Arrowhead at end
+            const angle = Math.atan2(y2 - cy, x2 - cx);
+            const headLen = 9;
+            ctx.setLineDash([]);
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // Draw Side-View Kid Volleyball Player
+        function drawVolleyPlayer(x, groundY, jerseyColor, facingRight, poseType, swingAngle = 0, jumpOffset = 0, label = '') {
+            ctx.save();
+            const footY = groundY - jumpOffset;
+            ctx.translate(x, footY);
+
+            // Ground Shadow
+            ctx.fillStyle = 'rgba(0,0,0,0.28)';
+            ctx.beginPath();
+            ctx.ellipse(0, jumpOffset + 2, Math.max(10, 20 - jumpOffset * 0.25), 6, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            const dir = facingRight ? 1 : -1;
+
+            // Legs (Athletic Bent Knees)
+            const kneeBend = (poseType === 'passingBawah') ? 8 : 3;
+            ctx.strokeStyle = '#FDBA74';
+            ctx.lineWidth = 8;
+            ctx.lineCap = 'round';
+            // Back leg
+            ctx.beginPath();
+            ctx.moveTo(-4 * dir, -34);
+            ctx.lineTo((-8 - kneeBend) * dir, -18);
+            ctx.lineTo(-6 * dir, -2);
+            ctx.stroke();
+            // Front leg
+            ctx.beginPath();
+            ctx.moveTo(4 * dir, -34);
+            ctx.lineTo((10 + kneeBend) * dir, -18);
+            ctx.lineTo(8 * dir, -2);
+            ctx.stroke();
+
+            // Shorts
+            ctx.fillStyle = '#0F172A';
+            ctx.beginPath();
+            ctx.roundRect(-11, -44, 22, 16, 4);
+            ctx.fill();
+
+            // Torso Jersey
+            ctx.fillStyle = jerseyColor;
+            ctx.strokeStyle = '#0F172A';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(-12, -74, 24, 32, 6);
+            ctx.fill();
+            ctx.stroke();
+
+            // Head
+            ctx.fillStyle = '#FDBA74';
+            ctx.beginPath();
+            ctx.arc(2 * dir, -87, 12, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Hair Cap
+            ctx.fillStyle = '#1E293B';
+            ctx.beginPath();
+            ctx.arc(2 * dir, -89, 12, Math.PI, Math.PI * 2);
+            ctx.fill();
+
+            // Arms Pose according to Technique
+            ctx.strokeStyle = '#FDBA74';
+            ctx.lineWidth = 7.5;
+            ctx.lineCap = 'round';
+
+            if (poseType === 'servis') {
+                // Left holding arm + Right underhand swing arm
+                ctx.beginPath();
+                ctx.moveTo(6 * dir, -66);
+                ctx.lineTo(22 * dir, -52);
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(2 * dir, -66);
+                ctx.rotate(swingAngle * dir);
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(18 * dir, 22);
+                ctx.stroke();
+                ctx.restore();
+            } else if (poseType === 'passingBawah') {
+                // Both arms joined straight forward-upward
+                ctx.beginPath();
+                ctx.moveTo(6 * dir, -66);
+                ctx.lineTo(28 * dir, -48 - swingAngle * 14);
+                ctx.stroke();
+            } else if (poseType === 'passingAtas') {
+                // Both hands raised above forehead
+                ctx.beginPath();
+                ctx.moveTo(4 * dir, -68);
+                ctx.lineTo(14 * dir, -96 - swingAngle * 8);
+                ctx.stroke();
+            } else if (poseType === 'smash') {
+                // Striking arm raised high overhead
+                ctx.save();
+                ctx.translate(4 * dir, -70);
+                ctx.rotate((-1.9 + swingAngle) * dir);
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(26 * dir, 0);
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // Player Role Label
+            if (label) {
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+                ctx.beginPath();
+                ctx.roundRect(-34, jumpOffset + 8, 68, 17, 6);
+                ctx.fill();
+
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = 'bold 10px Nunito, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(label, 0, jumpOffset + 20);
+            }
+
+            ctx.restore();
+        }
+
+        // Draw Yellow-Blue Volleyball on Canvas
+        function drawCanvasVolleyball(x, y, spin) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(spin);
+
+            // Base Yellow Ball
+            ctx.fillStyle = '#FACC15';
+            ctx.strokeStyle = '#0F172A';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(0, 0, 12, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Blue & White Panel Curves
+            ctx.strokeStyle = '#0284C7';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(0, -6, 10, 0.25 * Math.PI, 0.75 * Math.PI);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(0, 6, 10, 1.25 * Math.PI, 1.75 * Math.PI);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        // Draw Side-View Volleyball Court & Center Net
+        function drawVolleyballCourt(w, h) {
+            const groundY = h - 72; // Above control bar
+            const padX = 36;
+            const courtW = w - padX * 2;
+            const midX = w / 2;
+
+            // Bright Sky Arena Background
+            const skyGrad = ctx.createLinearGradient(0, 0, 0, groundY);
+            skyGrad.addColorStop(0, '#0284C7');
+            skyGrad.addColorStop(0.65, '#38BDF8');
+            skyGrad.addColorStop(1, '#BAE6FD');
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            // Arena Floor Base (Green Surround)
+            ctx.fillStyle = '#10B981';
+            ctx.fillRect(0, groundY, w, h - groundY);
+
+            // Orange Volleyball Court Surface Strip
+            ctx.fillStyle = '#F97316';
+            ctx.fillRect(padX, groundY - 4, courtW, 14);
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(padX, groundY - 4, courtW, 14);
+
+            // End Lines & Attack Lines Markers
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(padX - 2, groundY - 8, 4, 20);
+            ctx.fillRect(padX + courtW - 2, groundY - 8, 4, 20);
+            ctx.fillRect(midX - courtW * 0.18, groundY - 6, 3, 16);
+            ctx.fillRect(midX + courtW * 0.18, groundY - 6, 3, 16);
+
+            // Center Net Post & Net Mesh
+            const netTopY = groundY - 102;
+            const netBotY = groundY - 56;
+
+            // Vertical Post
+            ctx.fillStyle = '#0F172A';
+            ctx.fillRect(midX - 3, netTopY - 8, 6, groundY - netTopY + 8);
+
+            // Net Mesh Box
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+            ctx.fillRect(midX - 5, netTopY, 10, netBotY - netTopY);
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(midX - 5, netTopY, 10, netBotY - netTopY);
+
+            // Top White & Yellow Tape on Net
+            ctx.fillStyle = '#FACC15';
+            ctx.fillRect(midX - 7, netTopY - 3, 14, 7);
+
+            // Net Label
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
+            ctx.beginPath();
+            ctx.roundRect(midX - 24, netTopY - 26, 48, 17, 6);
+            ctx.fill();
+            ctx.fillStyle = '#FACC15';
+            ctx.font = 'bold 10px Fredoka, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('NET SD', midX, netTopY - 14);
+
+            return { padX, courtW, midX, groundY, netTopY };
+        }
+
+        function updateAndDrawVolleySim() {
+            const w = canvas.width;
+            const h = canvas.height;
+            const court = drawVolleyballCourt(w, h);
+            const { padX, courtW, midX, groundY, netTopY } = court;
+
+            if (simPlaying) {
+                const boost = hitBoostTimer > 0 ? 1.65 : 1.0;
+                simClock += 0.025 * simSpeed * boost;
+                if (hitBoostTimer > 0) hitBoostTimer--;
+                if (pointBannerTimer > 0) pointBannerTimer--;
+            }
+
+            // Quadratic Bezier Helper
+            function quadBezier(t, p0, p1, p2) {
+                const inv = 1 - t;
+                return inv * inv * p0 + 2 * inv * t * p1 + t * t * p2;
+            }
+
+            // MODE 1: SERVIS BAWAH
+            if (volleyMode === 'servis') {
+                const serverX = padX + 22;
+                const receiverX = padX + courtW * 0.78;
+                const cycle = simClock % 3.2;
+
+                const startX = serverX + 20;
+                const startY = groundY - 46;
+                const ctrlX = midX;
+                const ctrlY = netTopY - 85;
+                const endX = receiverX - 18;
+                const endY = groundY - 48;
+
+                drawTrajectoryArc(startX, startY, ctrlX, ctrlY, endX, endY, '#FACC15');
+
+                let swing = 0;
+                let ballX = startX;
+                let ballY = startY;
+
+                if (cycle < 0.7) {
+                    swing = Math.sin((cycle / 0.7) * Math.PI) * -0.9;
+                } else {
+                    const t = Math.min(1, (cycle - 0.7) / 2.2);
+                    ballX = quadBezier(t, startX, ctrlX, endX);
+                    ballY = quadBezier(t, startY, ctrlY, endY);
+                    if (Math.abs(cycle - 0.72) < 0.03 && simPlaying) {
+                        spawnSparkParticles(startX, startY, '#FACC15');
+                    }
+                }
+
+                drawVolleyPlayer(serverX, groundY, '#FACC15', true, 'servis', swing, 0, 'Servis Bawah');
+                drawVolleyPlayer(receiverX, groundY, '#0284C7', false, 'passingBawah', 0, 0, 'Penerima');
+                drawCanvasVolleyball(ballX, ballY, simClock * 9);
+            }
+
+            // MODE 2: PASSING BAWAH
+            else if (volleyMode === 'passingBawah') {
+                const p1X = padX + courtW * 0.22;
+                const p2X = padX + courtW * 0.41; // Setter near net
+                const t = (Math.sin(simClock * 2.3) + 1) / 2; // Smooth back and forth pass
+
+                const x1 = p1X + 26, y1 = groundY - 52;
+                const x2 = p2X - 24, y2 = groundY - 54;
+                const cx = (x1 + x2) / 2, cy = netTopY - 35;
+
+                drawTrajectoryArc(x1, y1, cx, cy, x2, y2, '#38BDF8');
+
+                const ballX = quadBezier(t, x1, cx, x2);
+                const ballY = quadBezier(t, y1, cy, y2);
+                const bump1 = t < 0.15 ? (1 - t / 0.15) : 0;
+                const bump2 = t > 0.85 ? ((t - 0.85) / 0.15) : 0;
+
+                drawVolleyPlayer(p1X, groundY, '#F97316', true, 'passingBawah', bump1, 0, 'Passing Bawah');
+                drawVolleyPlayer(p2X, groundY, '#FACC15', false, 'passingBawah', bump2, 0, 'Teman Tim');
+                drawCanvasVolleyball(ballX, ballY, simClock * 7);
+            }
+
+            // MODE 3: PASSING ATAS
+            else if (volleyMode === 'passingAtas') {
+                const setterX = padX + courtW * 0.34;
+                const targetX = padX + courtW * 0.74;
+                const cycle = simClock % 2.8;
+                const t = Math.min(1, cycle / 2.4);
+
+                const x1 = setterX + 14, y1 = groundY - 102;
+                const x2 = targetX - 18, y2 = groundY - 62;
+                const cx = midX, cy = netTopY - 90;
+
+                drawTrajectoryArc(x1, y1, cx, cy, x2, y2, '#FACC15');
+
+                const ballX = quadBezier(t, x1, cx, x2);
+                const ballY = quadBezier(t, y1, cy, y2);
+                const pushUp = cycle < 0.4 ? Math.sin((cycle / 0.4) * Math.PI) : 0;
+
+                drawVolleyPlayer(setterX, groundY, '#FACC15', true, 'passingAtas', pushUp, 0, 'Passing Atas');
+                drawVolleyPlayer(targetX, groundY, '#0284C7', false, 'passingBawah', 0, 0, 'Lawan');
+                drawCanvasVolleyball(ballX, ballY, simClock * 8);
+            }
+
+            // MODE 4: SMASH RINGAN
+            else if (volleyMode === 'smash') {
+                const spikerX = midX - 46;
+                const defX = padX + courtW * 0.82;
+                const cycle = simClock % 3.2;
+
+                const hitX = spikerX + 22;
+                const hitY = netTopY - 22;
+                const landX = defX - 10;
+                const landY = groundY - 14;
+
+                drawTrajectoryArc(hitX, hitY, (hitX + landX) / 2, hitY + 20, landX, landY, '#F97316');
+
+                let jumpH = 0;
+                let armSwing = 0;
+                let ballX = hitX;
+                let ballY = hitY;
+
+                if (cycle < 1.1) {
+                    // Toss & jump up
+                    const prep = cycle / 1.1;
+                    jumpH = Math.sin(prep * Math.PI * 0.5) * 34;
+                    ballY = groundY - 50 - prep * 68;
+                } else if (cycle < 2.2) {
+                    // Spike strike downward!
+                    const strike = (cycle - 1.1) / 1.1;
+                    jumpH = Math.cos(strike * Math.PI * 0.5) * 34;
+                    armSwing = Math.min(1.4, strike * 2.5);
+                    ballX = hitX + (landX - hitX) * strike;
+                    ballY = hitY + (landY - hitY) * strike;
+                } else {
+                    ballX = landX;
+                    ballY = landY;
+                    if (pointBannerTimer === 0 && simPlaying) {
+                        pointBannerTimer = 45;
+                        playPointCheerSound();
+                        spawnSparkParticles(landX, landY, '#FACC15');
+                    }
+                }
+
+                drawVolleyPlayer(spikerX, groundY, '#F97316', true, 'smash', armSwing, jumpH, 'Smash Ringan');
+                drawVolleyPlayer(defX, groundY, '#0284C7', false, 'passingBawah', 0, 0, 'Bertahan');
+                drawCanvasVolleyball(ballX, ballY, cycle >= 1.1 ? simClock * 16 : simClock * 4);
+
+                if (cycle >= 2.15) {
+                    ctx.save();
+                    ctx.fillStyle = '#FACC15';
+                    ctx.strokeStyle = '#0F172A';
+                    ctx.lineWidth = 4;
+                    ctx.font = '900 30px Fredoka, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.strokeText('POIN MASUK!! 🏐🎉', midX, 46);
+                    ctx.fillText('POIN MASUK!! 🏐🎉', midX, 46);
+                    ctx.restore();
+                }
+            }
+
+            // Render Spark Particles
+            for (let i = sparkParticles.length - 1; i >= 0; i--) {
+                const p = sparkParticles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= 0.03;
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = Math.max(0, p.alpha);
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                if (p.alpha <= 0) sparkParticles.splice(i, 1);
+            }
+        }
+
+        function animateLoop() {
+            updateAndDrawVolleySim();
+            requestAnimationFrame(animateLoop);
+        }
+        animateLoop();
+
+        // 5. Detail Modal Content for Volleyball Modules
+        const volleyModules = {
+            servis: {
+                title: "1. Langkah Servis Bawah (Underhand Service)",
+                badge: "Teknik Dasar 1 • Memulai Permainan",
+                steps: [
+                    "Berdiri di luar garis belakang lapangan dengan kaki kiri di depan dan kaki kanan di belakang (lutut sedikit ditekuk).",
+                    "Pegang bola voli dengan tangan kiri di depan pinggang setinggi perut.",
+                    "Tarik lengan kanan lurus ke belakang, lalu ayunkan ke depan dan pukul bagian bawah bola dengan telapak tangan atau kepalan tangan.",
+                    "Langkahkan kaki kanan ke depan setelah memukul bola agar keseimbangan terjaga dan segera masuk ke lapangan."
+                ],
+                speech: "Langkah melakukan servis bawah. Berdiri di belakang garis lapangan dengan kaki kiri di depan. Pegang bola dengan tangan kiri di depan pinggang, lalu ayunkan lengan kanan lurus dari bawah ke depan memukul bagian bawah bola hingga melambung melewati net."
+            },
+            passingBawah: {
+                title: "2. Langkah Passing Bawah (Forearm Pass)",
+                badge: "Teknik Dasar 2 • Menerima Bola Rendah",
+                steps: [
+                    "Berdiri dengan kedua kaki dibuka selebar bahu dan kedua lutut ditekuk rendah seperti posisi kuda-kuda.",
+                    "Rapatkan dan luruskan kedua lengan di depan badan dengan kedua ibu jari sejajar (tangan kanan menggenggam tangan kiri).",
+                    "Perkenaan bola tepat pada bagian lengan bawah (di atas pergelangan tangan), bukan pada kepalan jari.",
+                    "Ayunkan kedua lengan lurus ke atas depan bersamaan dengan meluruskan kedua lutut agar bola memantul terarah."
+                ],
+                speech: "Langkah melakukan passing bawah. Buka kaki selebar bahu dan tekuk kedua lutut. Rapatkan dan luruskan kedua lengan di depan badan, lalu ayunkan lengan memantulkan bola tepat pada lengan bawah."
+            },
+            passingAtas: {
+                title: "3. Langkah Passing Atas (Overhead Pass)",
+                badge: "Teknik Dasar 3 • Mengumpan Bola Tinggi",
+                steps: [
+                    "Berdiri siap menghadap arah datangnya bola dengan lutut sedikit ditekuk dan badan agak condong ke depan.",
+                    "Angkat kedua tangan di atas depan dahi dengan siku agak ditekuk ke samping.",
+                    "Buka jari-jari kedua tangan menyerupai mangkuk setengah lingkaran (ibu jari dan telunjuk membentuk segitiga).",
+                    "Dorong bola ke atas depan menggunakan ruas-ruas jari tangan sambil meluruskan siku dan lutut."
+                ],
+                speech: "Langkah melakukan passing atas. Angkat kedua tangan di atas depan dahi dengan jari terbuka membentuk mangkuk, lalu dorong bola ke atas depan menggunakan ujung jari tangan."
+            },
+            sarana: {
+                title: "4. Mengenal Bola & Lapangan Voli Mini SD",
+                badge: "Sarana & Prasarana Bola Voli SD",
+                steps: [
+                    "Ukuran Lapangan Voli Mini SD: Panjang 12 meter dan lebar 6 meter (lebih ringkas dibanding lapangan dewasa 18m x 9m).",
+                    "Tinggi Net Bola Voli Mini SD: 2,10 meter untuk putra dan 2,00 meter untuk putri.",
+                    "Bola Voli Ukuran 4: Berat sekitar 230–250 gram dengan lapisan kulit empuk yang aman untuk tangan anak SD.",
+                    "Sistem Pertandingan: Dimainkan oleh 4 pemain per tim dengan sistem reli poin (setiap bola mati menghasilkan poin)."
+                ],
+                speech: "Sarana dan prasarana bola voli mini SD. Lapangan berukuran panjang 12 meter dan lebar 6 meter. Tinggi net 2,10 meter untuk putra dan 2,00 meter untuk putri. Menggunakan bola voli ukuran 4 yang ringan dan dimainkan 4 pemain per regu."
+            }
+        };
+
+        function openDetailModal(key) {
+            const data = volleyModules[key];
+            if (!data) return;
+            playVolleyHitSound();
+
+            const stepsHtml = data.steps.map((s, idx) => `
+                <li class="flex items-start gap-3 bg-skycourt-50 p-3 rounded-2xl border border-skycourt-200">
+                    <span class="bg-skycourt-500 text-white font-black w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5 font-heading">${idx + 1}</span>
+                    <span class="text-xs md:text-sm text-slate-700 font-bold leading-relaxed">${s}</span>
+                </li>
+            `).join('');
+
+            document.getElementById('modal-body').innerHTML = `
+                <div class="border-b pb-3 pr-8">
+                    <span class="bg-volley-yellow text-slate-950 text-xs font-black px-3 py-1 rounded-full font-heading">${data.badge}</span>
+                    <h3 class="text-xl font-extrabold text-slate-900 mt-2 font-heading">${data.title}</h3>
+                </div>
+                <ul class="space-y-2.5">${stepsHtml}</ul>
+                <button onclick="speakText('${data.speech}')" class="w-full bg-amber-100 hover:bg-amber-200 text-amber-900 font-extrabold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition border border-amber-300">
+                    <i class="fa-solid fa-volume-high"></i> Dengarkan Penjelasan Suara
+                </button>
+            `;
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+            stopAllSpeech();
+        }
+
+        // 6. Interactive Quiz Engine (5 Questions for Elementary School Students)
+        const volleyQuiz = [
+            {
+                question: "Pukulan pertama dari belakang garis lapangan untuk memulai permainan bola voli disebut...",
+                options: [
+                    "Smash",
+                    "Servis",
+                    "Passing bawah",
+                    "Blocking"
+                ],
+                answer: 1,
+                explanation: "Servis (seperti servis bawah) adalah pukulan pertama dari belakang garis lapangan untuk memulai permainan bola voli."
+            },
+            {
+                question: "Saat melakukan passing bawah, bagian tubuh manakah yang tepat mengenai bola voli?",
+                options: [
+                    "Ujung jari-jari tangan",
+                    "Lengan bawah di atas pergelangan tangan",
+                    "Siku tangan",
+                    "Kepala bagian atas"
+                ],
+                answer: 1,
+                explanation: "Perkenaan bola yang benar pada passing bawah adalah di lengan bawah (antara pergelangan tangan dan siku) yang dirapatkan lurus."
+            },
+            {
+                question: "Bagaimana posisi jari-jari kedua tangan saat melakukan teknik passing atas?",
+                options: [
+                    "Mengepal erat seperti tinju",
+                    "Terbuka membentuk mangkuk di atas depan dahi",
+                    "Dirapatkan lurus ke bawah",
+                    "Diletakkan di belakang punggung"
+                ],
+                answer: 1,
+                explanation: "Pada passing atas, jari-jari kedua tangan dibuka membentuk mangkuk setengah lingkaran di atas depan dahi untuk mendorong bola."
+            },
+            {
+                question: "Berapa jumlah pemain inti dalam satu regu pada permainan bola voli mini jenjang SD?",
+                options: [
+                    "11 pemain",
+                    "6 pemain",
+                    "4 pemain",
+                    "2 pemain"
+                ],
+                answer: 2,
+                explanation: "Permainan bola voli mini untuk anak SD dimainkan oleh 4 pemain inti dalam setiap regu (sedangkan voli dewasa 6 pemain)."
+            },
+            {
+                question: "Berapa kali maksimal satu regu boleh menyentuh atau memantulkan bola sebelum menyeberangkannya melewati net?",
+                options: [
+                    "Maksimal 3 kali sentuhan",
+                    "Maksimal 5 kali sentuhan",
+                    "Bebas tanpa batas",
+                    "Hanya 1 kali sentuhan"
+                ],
+                answer: 0,
+                explanation: "Setiap regu maksimal boleh menyentuh bola sebanyak 3 kali sebelum bola diseberangkan ke lapangan lawan."
+            }
+        ];
+
+        let currentQ = 0;
+        let currentScore = 0;
+        let answered = false;
+
+        function renderQuizQuestion() {
+            answered = false;
+            const q = volleyQuiz[currentQ];
+            document.getElementById('question-number').textContent = `Soal ${currentQ + 1} dari ${volleyQuiz.length}`;
+            document.getElementById('live-score-text').textContent = `Skor: ${currentScore}`;
+            document.getElementById('question-text').textContent = q.question;
+
+            const optionsDiv = document.getElementById('options-container');
+            optionsDiv.innerHTML = '';
+            document.getElementById('feedback-box').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-2xl border-2 border-slate-200 hover:border-skycourt-500 hover:bg-skycourt-50 transition text-xs md:text-sm font-extrabold text-slate-800 flex items-center justify-between group";
+                btn.innerHTML = `
+                    <span>${String.fromCharCode(65 + idx)}. ${opt}</span>
+                    <i class="fa-regular fa-circle text-slate-300 group-hover:text-skycourt-500 text-lg"></i>
+                `;
+                btn.onclick = () => checkAnswer(idx, btn);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function readCurrentQuestion() {
+            const q = volleyQuiz[currentQ];
+            speakText(`${q.question}. Pilihan A: ${q.options[0]}. Pilihan B: ${q.options[1]}. Pilihan C: ${q.options[2]}. Pilihan D: ${q.options[3]}.`);
+        }
+
+        function checkAnswer(selectedIdx, btn) {
+            if (answered) return;
+            answered = true;
+
+            const q = volleyQuiz[currentQ];
+            const feedback = document.getElementById('feedback-box');
+            const allBtns = document.getElementById('options-container').children;
+
+            if (selectedIdx === q.answer) {
+                currentScore += 20;
+                document.getElementById('live-score-text').textContent = `Skor: ${currentScore}`;
+                playQuizFeedbackSound(true);
+
+                btn.className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-extrabold text-xs md:text-sm flex items-center justify-between";
+                btn.querySelector('i').className = "fa-solid fa-circle-check text-emerald-600 text-xl";
+
+                feedback.className = "mt-4 p-4 rounded-2xl text-center font-bold text-xs md:text-sm bg-emerald-100 text-emerald-950 border-2 border-emerald-400";
+                feedback.innerHTML = `🎉 HEBAT, JAWABANMU BENAR! ${q.explanation}`;
+            } else {
+                playQuizFeedbackSound(false);
+
+                btn.className = "w-full text-left p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 text-rose-950 font-extrabold text-xs md:text-sm flex items-center justify-between";
+                btn.querySelector('i').className = "fa-solid fa-circle-xmark text-rose-600 text-xl";
+
+                allBtns[q.answer].className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-extrabold text-xs md:text-sm flex items-center justify-between";
+                allBtns[q.answer].querySelector('i').className = "fa-solid fa-circle-check text-emerald-600 text-xl";
+
+                feedback.className = "mt-4 p-4 rounded-2xl text-center font-bold text-xs md:text-sm bg-rose-100 text-rose-950 border-2 border-rose-300";
+                feedback.innerHTML = `😊 BELUM TEPAT! Jawaban yang benar adalah <strong>${q.options[q.answer]}</strong>. ${q.explanation}`;
+            }
+
+            feedback.classList.remove('hidden');
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.innerHTML = (currentQ < volleyQuiz.length - 1)
+                ? `Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>`
+                : `Lihat Hasil Nilai <i class="fa-solid fa-trophy"></i>`;
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            if (currentQ < volleyQuiz.length - 1) {
+                currentQ++;
+                renderQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            const resBox = document.getElementById('result-container');
+            resBox.classList.remove('hidden');
+
+            document.getElementById('final-score').textContent = currentScore;
+            const starsCount = Math.max(1, Math.round(currentScore / 20));
+            document.getElementById('stars-earned').textContent = '⭐'.repeat(starsCount);
+
+            if (currentScore >= 80) {
+                document.getElementById('result-message').textContent = "Luar biasa! Kamu benar-benar jagoan bola voli SD yang menguasai teknik dan sportivitas! 🏐🏆";
+                playPointCheerSound();
+                confetti({ particleCount: 130, spread: 85, origin: { y: 0.6 } });
+            } else if (currentScore >= 60) {
+                document.getElementById('result-message').textContent = "Bagus sekali! Terus berlatih passing dan servis agar makin mahir!";
+            } else {
+                document.getElementById('result-message').textContent = "Tetap semangat! Ayo baca kembali materinya dan coba kuis sekali lagi ya!";
+            }
+        }
+
+        function resetQuiz() {
+            currentQ = 0;
+            currentScore = 0;
+            document.getElementById('result-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            renderQuizQuestion();
+        }
+
+        window.onload = function() {
+            renderQuizQuestion();
+        };
+    </script>
+</body>
+</html>
